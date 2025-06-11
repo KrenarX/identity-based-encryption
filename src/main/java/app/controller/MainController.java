@@ -38,7 +38,6 @@ public class MainController {
 	@Autowired
 	private Session session;
 
-	
 	@GetMapping
     public String login(HttpSession session) {
 		if (this.session.isSessionActive(session)) {
@@ -65,28 +64,7 @@ public class MainController {
 		
         return "redirect:/home";
     }
-	
-	
-	private boolean isValidCredentials(String username, String password) {
-		boolean loginError = false;
-		
-		User existingUser = userController.getUserByUsername(username);
-		
-		if(existingUser == null)
-	     {
-			loginError = true;
-	     }
-		
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        
-        if (existingUser == null || !passwordEncoder.matches(password, existingUser.getPassword())) {
-        	loginError = true;
-        }
-        
-		return loginError;
-	}
 
-	
 	@GetMapping("/home")
     public String showHome(HttpSession session, Model model) {
 		
@@ -204,6 +182,22 @@ public class MainController {
 	    
 	}
 
-	
-	
+	private boolean isValidCredentials(String username, String password) {
+		boolean loginError = false;
+
+		User existingUser = userController.getUserByUsername(username);
+
+		if(existingUser == null)
+		{
+			loginError = true;
+		}
+
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+		if (existingUser == null || !passwordEncoder.matches(password, existingUser.getPassword())) {
+			loginError = true;
+		}
+
+		return loginError;
+	}
 }
