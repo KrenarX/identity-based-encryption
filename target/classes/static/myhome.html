@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+        
+        .navbar {
+            background-color: #007bff;
+            color: #ffffff;
+        }
+
+        .navbar-brand {
+            color: #ffffff !important;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .username {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            margin-top: 30px;
+        }
+        
+        .user-list {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 30px;
+            margin-bottom: 70px;
+        }
+        
+        .user-list-item {
+            margin-bottom: 10px;
+        }
+        
+        .oauth-true {
+            color: green;
+        }
+        
+        .oauth-false {
+            color: red;
+        }
+        
+   .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #f8f8f8;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        
+        .logout-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<form action="/logoutK" method="POST">
+    <nav class="navbar navbar-expand navbar-dark">
+        <a class="navbar-brand" href="/">Identity-based encryption</a>
+        <button class="btn btn-danger logout-btn" onclick="logout()">Logout</button>
+</form>
+
+</nav>
+
+<div class="container">
+    <div class="username">
+        <p>Benvenuto, <span th:text="${username}" />!</p>
+    </div>
+    
+  <div class="user-list">
+    <h2>Utenti</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="user : ${users}" class="user-list-item">
+                <td><a th:href="@{/user/{username}(username=${user.username})}" th:text="${user.username}"></a></td>
+            </tr>
+        </tbody>
+    </table>
+	</div>
+
+	
+   
+</div>
+
+ <footer class="footer">
+        <p>Crittografia - Identity-based encryption</p>
+        <p>Realizzato da: Krenar Hoxha</p>
+    </footer>
+
+<script>
+    function logout() {
+        sessionStorage.removeItem("username");
+        
+        var auth2 = gapi.auth2.getAuthInstance();
+		auth2.disconnect();
+		
+        window.location.href = "/logout";
+        
+    }
+    
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Identity-based encryption</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta name="google-signin-client_id" content="287602777849-br0eh5rbve6gqido4rbrm5ollujt7loq.apps.googleusercontent.com">
+     <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+     <script src="https://apis.google.com/js/platform.js" async defer></script>
+     <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+  	<script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+     <script src="https://apis.google.com/js/api.js"></script>
+       
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 50px;
+        }
+
+        form {
+            width: 300px;
+            margin: 0 auto;
+            margin-top: 50px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            
+		    align-items: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .username-addon {
+            display: flex;
+            align-items: center;
+        }
+
+        .username-addon-text {
+            color: blue;
+            font-weight: bold;
+            margin-left: 5px;
+            padding-bottom: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            background-color: blue;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input:hover {
+            background-color: #f2f2f2;
+        }
+        
+         .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #f8f8f8;
+            padding: 10px 0;
+            text-align: center;
+        }
+        
+        .center-div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>Identity-based encryption</h1>
+   <form action="/login" method="POST" onsubmit="sessione();">
+     <div class="form-group">
+            <label for="username">Username:</label>
+            <div class="username-addon">
+                <input type="text" class="form-control" id="username" name="username" required>
+                <span class="username-addon-text">@unimi</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        
+        <p id="error"></p>
+
+        <input type="submit" value="Login" class="btn btn-primary">
+        <br><br>
+        
+        <div class="container center-div">
+        	<div id="my-signin2" data-prompt="select_account"></div>
+    	</div>
+        
+       
+        <input type="button" value="Registrazione" onclick="window.location.href='/registration'" class="btn btn-primary">
+
+    </form>
+    
+    <footer class="footer">
+        <p>Crittografia - Identity-based encryption</p>
+        <p>Realizzato da: Krenar Hoxha</p>
+    </footer>
+
+
+    <script>
+	    var queryString = window.location.search;
+	    var urlParams = new URLSearchParams(queryString);
+	    var error = urlParams.get('error');
+	
+	    if (error) {
+	        var errorElement = document.getElementById("error");
+	        errorElement.innerText = error;
+	        errorElement.style.color = "red";
+	        errorElement.style.fontWeight = "bold";
+	        errorElement.style.display = "block";
+	    }
+	    
+	    function sessione() {
+		
+		   var usernameInput = document.getElementById('username');
+    		var username = usernameInput.value;
+			
+		    if (username) {
+		      sessionStorage.setItem("username", username);
+		    }
+		  }
+    
+</script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+
+</html>

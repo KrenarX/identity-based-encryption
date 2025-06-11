@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dettagli Utente</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+        
+        .navbar {
+            background-color: #007bff;
+            color: #ffffff;
+        }
+
+        .navbar-brand {
+            color: #ffffff !important;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .username {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            margin-top: 30px;
+        }
+        
+        .user-list {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 30px;
+            margin-bottom: 70px;
+        }
+        
+        .user-list-item {
+            margin-bottom: 10px;
+        }
+        
+        .a {
+        	color: #007bff;
+        }
+        
+        
+	 .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #f8f8f8;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        
+        .logout-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        
+        .user-details {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 5px;
+        }
+        
+        .user-field {
+            margin-bottom: 10px;
+        }
+        
+        .btn-submit {
+            background-color: #007bff;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+<form action="/logoutK" method="POST">
+    <nav class="navbar navbar-expand navbar-dark">
+        <a class="navbar-brand" href="/">Identity-based encryption</a>
+        <button class="btn btn-danger logout-btn" onclick="logout()">Logout</button>
+</form>
+
+</nav>
+
+</br>
+
+<div class="container">
+    <h1>Dettagli utente</h1>
+    <div class="user-details" th:if="${user}">
+        <div class="user-field">
+            <strong>Username:</strong> <span th:text="${user.username}"></span>
+        </div>
+        <div class="user-field">
+            <strong>Info:</strong> <span th:text="${user.info}"></span>
+        </div>
+        <div class="user-field">
+            <strong>Chiave pubblica:</strong>
+            </br>
+            X = <span th:text="${chiavepubX}"></span> 
+            </br>
+            Y = <span th:text="${chiavepubY}"></span>
+            
+        </div>    
+        <div class="user-field">    
+            <strong>Chiave privata:</strong> 
+            </br>
+            <span th:text="${chiavepriv}"></span>
+        </div>
+    </div>
+    <div th:unless="${user}">
+        <p>Utente non trovato.</p>
+    </div>
+    
+    </br></br>
+    
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form id="cifraForm" action="/cifra" method="get">
+            	<input type="hidden" name="username" value="${user.username}">
+    
+                <div class="form-group">
+                    <label for="plaintext">Plaintext:</label>
+                    <textarea class="form-control" id="plaintext" name="plaintext" rows="6"></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-submit">Cifra</button>
+                </div>
+            </form>
+        </div>
+        <div class="col">
+            <form id="decifraForm" action="/decifra" method="get">
+            <input type="hidden" name="username" value="${user.username}">
+                <div class="form-group">
+                    <label for="ciphertext">Ciphertext:</label>
+                    <textarea class="form-control" id="ciphertext" name="ciphertext" rows="6"></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-submit">Decifra</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+$(document).ready(function() {
+    $("#cifraForm").submit(function(event) {
+        event.preventDefault(); // Impedisce il comportamento predefinito del submit
+        
+        var form = $("#cifraForm");
+        var formData = form.serialize(); // Serializza i dati del modulo
+        
+		        $.ajax({
+				    type: form.attr('method'),
+				    url: form.attr('action'),
+				    data: formData,
+				    success: function(response) {
+				        // Aggiorna l'elemento HTML specifico con il testo cifrato ricevuto dal server
+				        $("#ciphertext").val(response);
+				    },
+				    error: function(xhr, status, error) {
+				        console.log("Errore nella richiesta AJAX: " + error);
+				    }
+				});
+        
+    });
+});
+
+
+$(document).ready(function() {
+    $("#decifraForm").submit(function(event) {
+        event.preventDefault(); // Impedisce il comportamento predefinito del submit
+        
+        var form = $("#decifraForm");
+        var formData = form.serialize(); // Serializza i dati del modulo
+        
+		        $.ajax({
+				    type: form.attr('method'),
+				    url: form.attr('action'),
+				    data: formData,
+				    success: function(response) {
+				        // Aggiorna l'elemento HTML specifico con il testo cifrato ricevuto dal server
+				        $("#plaintext").val(response);
+				    },
+				    error: function(xhr, status, error) {
+				        console.log("Errore nella richiesta AJAX: " + error);
+				    }
+				});
+        
+    });
+});
+
+</script>
+
+    
+
+</div>
+
+<footer class="footer">
+        <p>Crittografia - Identity-based encryption</p>
+        <p>Realizzato da: Krenar Hoxha</p>
+</footer>
+
+<script>
+    function logout() {
+        sessionStorage.removeItem("username");
+        window.location.href = "/logout";
+    }
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registrazione</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 50px;
+        }
+
+        form {
+            width: 300px;
+            margin: 0 auto;
+            margin-top: 50px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            align-items: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .username-addon {
+            display: flex;
+            align-items: center;
+        }
+
+        .username-addon-text {
+            color: blue;
+            font-weight: bold;
+            margin-left: 5px;
+            padding-bottom: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            background-color: blue;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input:hover {
+            background-color: #f2f2f2;
+        }
+        
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+         .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #f8f8f8;
+            padding: 10px 0;
+            text-align: center;
+        }
+        
+        .return-button-container {
+  display: flex;
+  justify-content: center;
+}
+        
+        .return-button {
+  width: 70%;
+  padding: 8px;
+  background-color: blue;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.return-button:hover {
+  background-color: #f2f2f2;
+}
+        
+        
+    </style>
+</head>
+<body>
+    <h1>Identity-based encryption</h1>
+    <form action="/registration" method="POST" onsubmit="sessione();">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <div class="username-addon">
+                <input type="text" class="form-control" id="username" name="username" required>
+                <span class="username-addon-text">@unimi</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="password">Conferma password:</label>
+            <input type="password" class="form-control" id="password2" name="password2" required>
+        </div>
+
+		<p id="error"></p>
+		
+        <input type="submit" value="Registrati" class="btn btn-primary">
+        
+        <br><br>
+        <div class="return-button-container">
+        <input type="button" value="Torna indietro" onclick="window.location.href='/'" class="return-button">
+        </div>
+        
+        
+    </form>
+    
+    <footer class="footer">
+        <p>Crittografia - Identity-based encryption</p>
+        <p>Realizzato da: Krenar Hoxha</p>
+    </footer>
+    
+<script>
+    var queryString = window.location.search;
+    var urlParams = new URLSearchParams(queryString);
+    var error = urlParams.get('error');
+
+    if (error) {
+        var errorElement = document.getElementById("error");
+        errorElement.innerText = error;
+        errorElement.style.color = "red";
+        errorElement.style.fontWeight = "bold";
+        errorElement.style.display = "block";
+    }
+    
+      function sessione() {
+		
+		   var usernameInput = document.getElementById('username');
+    		var username = usernameInput.value;
+			
+		    if (username) {
+		      sessionStorage.setItem("username", username);
+		    }
+		  }
+</script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</html>
